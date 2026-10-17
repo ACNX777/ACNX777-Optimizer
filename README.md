@@ -22,6 +22,7 @@
 - **NVIDIA Overlay (Alt+Z) sengaja tetap DIAKTIFKAN** — script hanya *menghapus* kemungkinan blokir lama (`DisableOverlay` di-set `0`), jadi recording/shadowplay tetap bisa dipakai.
 - **CompactOS**, service tuning, dan lain-lain (lihat komentar di dalam script).
 - **Aman untuk Wi-Fi & Ethernet** — tidak ada service jaringan yang di-disable.
+- **BitLocker aman** — proteksi otomatis di-*suspend* 1 reboot sebelum tweak, jadi **tidak diminta 48-digit recovery key** saat boot (lihat bagian BitLocker di bawah).
 
 > ⚠️ **Catatan penting:** script ini mengubah registry dan beberapa konfigurasi sistem secara permanen. **Buat restore point / backup** dulu. Gunakan dengan risiko Anda sendiri.
 
@@ -32,6 +33,23 @@
 Script ini **tidak men-disable service jaringan**: `WlanSvc` (Wi-Fi), `Wcmsvc`, `NlaSvc`, `Dhcp`, `Dnscache`, `Eaphost`, `dot3svc`, dan `Netman` tetap berjalan — dan Windows Firewall (`mpssvc`) justru dipastikan aktif. Jadi internet lewat **Wi-Fi maupun kabel (Ethernet) tetap normal**.
 
 Yang **tidak** didukung (service-nya memang di-disable): VPN / PPPoE (`RasMan`, `RemoteAccess`), Mobile Hotspot / Internet Connection Sharing (`icssvc`, `SharedAccess`), dan modem 4G/WWAN (`WwanSvc`).
+
+---
+
+## 🔐 BitLocker (tidak perlu 48-digit recovery key)
+
+Sebelum tweak dijalankan, script **mendeteksi BitLocker** pada volume sistem. Kalau proteksi aktif, script otomatis melakukan:
+
+- `manage-bde -protectors -disable %SystemDrive% -rebootcount 1`
+- fallback (kalau di atas gagal): `Suspend-BitLocker -MountPoint $env:SystemDrive -RebootCount 1`
+
+Artinya proteksi **di-pause untuk 1 kali reboot** dan **aktif kembali otomatis** setelah restart — jadi **tidak muncul layar minta 48-digit recovery key**.
+
+> Kalau versi lama sudah pernah dijalankan dan PC Anda sekarang minta recovery key: buka **https://aka.ms/myrecoverykey** pakai akun Microsoft Anda untuk melihat kuncinya.
+>
+> Tetap disarankan menyimpan recovery key sendiri sebelum menjalankan tool apa pun yang mengubah boot config (`manage-bde -protectors -get C:`).
+>
+> Service `BDESVC` (BitLocker) **tidak** ikut di-disable, supaya BitLocker tetap bisa dikelola dan auto-resume-nya jalan.
 
 ---
 
