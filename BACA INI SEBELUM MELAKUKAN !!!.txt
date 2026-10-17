@@ -1,0 +1,24 @@
+⚡ **SESUAIKAN TWEAK DENGAN REFRESH RATE MONITOR KALIAN**
+
+Gunakan preset sesuai dengan **refresh rate monitor** yang kalian pakai agar konfigurasi lebih tepat dan optimal.
+
+Contoh:
+**60 Hz → Preset 60 Hz**
+**75 Hz → Preset 75 Hz**
+**100 Hz → Preset 100 Hz**
+**120 Hz → Preset 120 Hz**
+**144 Hz → Preset 144 Hz**
+**165 Hz → Preset 165 Hz**
+**185 Hz → Preset 185 Hz**
+
+Jangan asal menggunakan preset yang tidak sesuai dengan monitor. Setiap konfigurasi dibuat dengan target penggunaan dan refresh rate yang berbeda.
+
+🧠 **BE SMART. USE THE RIGHT TWEAK.**
+
+**Developed by @VazerX**
+**Optimize • Tweaking PC • Performance**
+
+Mau optimasi PC langsung?
+🚀 **LANGSUNG AJA KE SVHYPER-X**
+
+**SVHYPER-X — Optimize Your System. Maximize Your Performance.**

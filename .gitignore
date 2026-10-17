@@ -1,0 +1,22 @@
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Temp / logs
+*.tmp
+*.log
+*.bak
+
+# Local registry backup produced by the script
+acnx777_backup.reg
+*_backup.reg
+
+# Big binaries intentionally NOT distributed in this repo
+*.exe
+*.apbx
+*.msi
+*.iso
+*.img
+*.7z
+*.zip

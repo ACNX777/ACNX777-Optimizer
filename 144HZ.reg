@@ -1,0 +1,49 @@
+Windows Registry Editor Version 5.00
+
+; ============================================================
+; SVX MAX LOW LATENCY DISPLAY
+; TARGET : 144Hz / 1ms Gaming Monitor
+; WINDOWS: 10 / 11
+; ============================================================
+
+; ------------------------------------------------------------
+; GAME DVR / BACKGROUND CAPTURE
+; ------------------------------------------------------------
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+"HistoricalCaptureEnabled"=dword:00000000
+"AudioCaptureEnabled"=dword:00000000
+
+; ------------------------------------------------------------
+; GAME MODE
+; ------------------------------------------------------------
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar]
+"AutoGameModeEnabled"=dword:00000001
+
+; ------------------------------------------------------------
+; MULTIMEDIA / GAMING SCHEDULING
+; ------------------------------------------------------------
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"SystemResponsiveness"=dword:00000000
+"NetworkThrottlingIndex"=dword:ffffffff
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games]
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000006
+"Scheduling Category"="High"
+"SFIO Priority"="High"
+
+; ------------------------------------------------------------
+; REDUCE WINDOWS UI OVERHEAD
+; ------------------------------------------------------------
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"MenuShowDelay"="0"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+"MinAnimate"="0"
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
+"EnableTransparency"=dword:00000000

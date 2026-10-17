@@ -1,0 +1,46 @@
+Windows Registry Editor Version 5.00
+
+; ==========================================================
+; SVX ULTRA MAX INPUT
+; KEYBOARD + MOUSE RESPONSIVENESS
+; ==========================================================
+
+; -------------------------
+; MOUSE — NO ACCELERATION
+; -------------------------
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"MouseSpeed"="0"
+"MouseThreshold1"="0"
+"MouseThreshold2"="0"
+"MouseSensitivity"="10"
+"MouseTrails"="0"
+"SnapToDefaultButton"="0"
+"MouseHoverTime"="10"
+
+; -------------------------
+; KEYBOARD — FAST RESPONSE
+; -------------------------
+[HKEY_CURRENT_USER\Control Panel\Keyboard]
+"KeyboardDelay"="0"
+"KeyboardSpeed"="31"
+
+; -------------------------
+; DISABLE GAME DVR CAPTURE
+; -------------------------
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+
+; -------------------------
+; MMCSS — GAMING PROFILE
+; -------------------------
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"NetworkThrottlingIndex"=dword:ffffffff
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games]
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000006
+"Scheduling Category"="High"
+"SFIO Priority"="High"

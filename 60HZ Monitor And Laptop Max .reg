@@ -1,0 +1,67 @@
+Windows Registry Editor Version 5.00
+
+; ============================================================
+; SVX SUPER MAX ULTRA HIGH
+; DISPLAY LOW LATENCY — 60 Hz / 1 ms
+; Windows 10 / 11
+; ============================================================
+
+; ============================================================
+; 1. GAME DVR / CAPTURE OFF
+; ============================================================
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+"HistoricalCaptureEnabled"=dword:00000000
+"AudioCaptureEnabled"=dword:00000000
+
+; ============================================================
+; 2. GAME MODE
+; ============================================================
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar]
+"AutoGameModeEnabled"=dword:00000001
+"AllowAutoGameMode"=dword:00000001
+
+; ============================================================
+; 3. MMCSS GAMING PROFILE
+; ============================================================
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"SystemResponsiveness"=dword:00000000
+"NetworkThrottlingIndex"=dword:ffffffff
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games]
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000006
+"Scheduling Category"="High"
+"SFIO Priority"="High"
+
+; ============================================================
+; 4. WINDOWS UI EFFECTS MINIMUM
+; ============================================================
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"MenuShowDelay"="0"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+"MinAnimate"="0"
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
+"EnableTransparency"=dword:00000000
+
+; ============================================================
+; 5. MOUSE — RAWER DESKTOP RESPONSE
+; ============================================================
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"MouseSpeed"="0"
+"MouseThreshold1"="0"
+"MouseThreshold2"="0"
+"MouseTrails"="0"
+"SnapToDefaultButton"="0"
+
+; ============================================================
+; 6. KEYBOARD — FASTEST WINDOWS REPEAT
+; ============================================================
+[HKEY_CURRENT_USER\Control Panel\Keyboard]
+"KeyboardDelay"="0"
+"KeyboardSpeed"="31"
