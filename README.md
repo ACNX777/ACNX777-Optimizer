@@ -36,14 +36,14 @@
 
 ## 🚀 Cara Pakai
 
-1. Download / clone repo ini (atau klik **Code → Download ZIP**).
+1. Download **ZIP**-nya di halaman **[Releases](../../releases/latest)** (udah lengkap semua file), atau clone repo ini.
 2. Klik kanan **`ACNX777+Optimizer.cmd`** → **Run as administrator**.
 3. Pilih konfigurasi Microsoft Store & Windows Update.
 4. Tunggu proses selesai. Ada backup registry + restore point otomatis.
 
 Script tambahan (opsional):
 
-- `Oneclick-V8.4.bat` — script tweaking terpisah. **Catatan:** sebagian fitur merujuk ke `C:\Oneclick Tools\...` yang **tidak** disertakan di repo ini.
+- `ACNXOneClick.bat` — script tweaking terpisah. **Catatan:** sebagian fitur merujuk ke `C:\Oneclick Tools\...` yang **tidak** disertakan di repo ini.
 
 ---
 
@@ -52,7 +52,7 @@ Script tambahan (opsional):
 ```
 ACNX777-Optimizer/
 ├── ACNX777+Optimizer.cmd               # tool utama (menu interaktif)
-├── Oneclick-V8.4.bat                   # script tweaking tambahan (opsional)
+├── ACNXOneClick.bat                    # script tweaking tambahan (opsional)
 ├── BACKUP REGISTIRY.bat                # buat System Restore Point
 ├── MAX INPUT.reg                       # keyboard + mouse responsiveness
 ├── MAX LOW-LATENCY DISPLAY.reg         # display / game presentation latency
@@ -65,8 +65,7 @@ ACNX777-Optimizer/
 ├── 185HZ SMOOTH LATECY.reg             # preset 185 Hz
 ├── BACA INI SEBELUM MELAKUKAN !!!.txt  # petunjuk preset refresh rate
 ├── README.md
-├── LICENSE
-└── .gitignore
+└── LICENSE
 ```
 
 ---
