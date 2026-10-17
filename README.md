@@ -21,8 +21,17 @@
   - Input latency (mouse/keyboard), Game DVR / Game Bar control.
 - **NVIDIA Overlay (Alt+Z) sengaja tetap DIAKTIFKAN** — script hanya *menghapus* kemungkinan blokir lama (`DisableOverlay` di-set `0`), jadi recording/shadowplay tetap bisa dipakai.
 - **CompactOS**, service tuning, dan lain-lain (lihat komentar di dalam script).
+- **Aman untuk Wi-Fi & Ethernet** — tidak ada service jaringan yang di-disable.
 
 > ⚠️ **Catatan penting:** script ini mengubah registry dan beberapa konfigurasi sistem secara permanen. **Buat restore point / backup** dulu. Gunakan dengan risiko Anda sendiri.
+
+---
+
+## 🌐 Aman untuk Wi-Fi & Ethernet
+
+Script ini **tidak men-disable service jaringan**: `WlanSvc` (Wi-Fi), `Wcmsvc`, `NlaSvc`, `Dhcp`, `Dnscache`, `Eaphost`, `dot3svc`, dan `Netman` tetap berjalan — dan Windows Firewall (`mpssvc`) justru dipastikan aktif. Jadi internet lewat **Wi-Fi maupun kabel (Ethernet) tetap normal**.
+
+Yang **tidak** didukung (service-nya memang di-disable): VPN / PPPoE (`RasMan`, `RemoteAccess`), Mobile Hotspot / Internet Connection Sharing (`icssvc`, `SharedAccess`), dan modem 4G/WWAN (`WwanSvc`).
 
 ---
 
@@ -43,7 +52,7 @@
 
 Script tambahan (opsional):
 
-- `ACNXOneClick.bat` — script tweaking terpisah. **Catatan:** sebagian fitur merujuk ke `C:\Oneclick Tools\...` yang **tidak** disertakan di repo ini.
+- `BACKUP REGISTIRY.bat` — membuat System Restore Point manual (nama: `BACKUP REGISTRY`).
 
 ---
 
@@ -52,7 +61,6 @@ Script tambahan (opsional):
 ```
 ACNX777-Optimizer/
 ├── ACNX777+Optimizer.cmd               # tool utama (menu interaktif)
-├── ACNXOneClick.bat                    # script tweaking tambahan (opsional)
 ├── BACKUP REGISTIRY.bat                # buat System Restore Point
 ├── MAX INPUT.reg                       # keyboard + mouse responsiveness
 ├── MAX LOW-LATENCY DISPLAY.reg         # display / game presentation latency
