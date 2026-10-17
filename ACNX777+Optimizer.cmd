@@ -193,6 +193,38 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Des
 reg export HKLM "%USERPROFILE%\Desktop\acnx777_backup.reg" /y
 
 :: =====================================================================
+:: 01b. BITLOCKER - SOSPENSIONE TEMPORANEA (EVITA LA RICHIESTA DELLA RECOVERY KEY)
+::      Trova il volume di sistema, mette in pausa la protezione per 1 riavvio.
+::      La protezione si riattiva da sola al riavvio successivo (nessun codice di 48 cifre).
+:: =====================================================================
+
+echo !GREEN!Checking BitLocker protection status...!RESET!
+set "BLPROT=NONE"
+powershell -NoProfile -Command "$v = Get-CimInstance -Namespace 'root\cimv2\security\microsoftvolumeencryption' -ClassName Win32_EncryptableVolume -ErrorAction SilentlyContinue | Where-Object { $_.DriveLetter -eq $env:SystemDrive }; if ($null -eq $v) { 'PROT=NONE' } else { 'PROT=' + [string]$v.ProtectionStatus }" > "%TEMP%\acnx777_bitlocker.txt" 2>nul
+for /f "tokens=1,* delims==" %%a in ('type "%TEMP%\acnx777_bitlocker.txt" 2^>nul') do set "BLPROT=%%b"
+
+if /i "!BLPROT!"=="0" goto :BitLocker_Skip
+if /i "!BLPROT!"=="NONE" goto :BitLocker_Skip
+
+echo !GOLD!BitLocker is ACTIVE. Suspending protection for 1 reboot ...!RESET!
+manage-bde -protectors -disable %SystemDrive% -rebootcount 1 >nul 2>&1
+set "BLPROT2=NONE"
+powershell -NoProfile -Command "$v = Get-CimInstance -Namespace 'root\cimv2\security\microsoftvolumeencryption' -ClassName Win32_EncryptableVolume -ErrorAction SilentlyContinue | Where-Object { $_.DriveLetter -eq $env:SystemDrive }; if ($null -eq $v) { 'PROT=NONE' } else { 'PROT=' + [string]$v.ProtectionStatus }" > "%TEMP%\acnx777_bitlocker2.txt" 2>nul
+for /f "tokens=1,* delims==" %%a in ('type "%TEMP%\acnx777_bitlocker2.txt" 2^>nul') do set "BLPROT2=%%b"
+if /i "!BLPROT2!"=="1" powershell -NoProfile -Command "Suspend-BitLocker -MountPoint $env:SystemDrive -RebootCount 1 -ErrorAction SilentlyContinue" >nul 2>&1
+if /i "!BLPROT2!"=="1" echo !GOLD!Fallback Suspend-BitLocker used. If a recovery key is still requested, read it at https://aka.ms/myrecoverykey!RESET!
+echo !GREEN!BitLocker handled. Protection re-activates AUTOMATICALLY at the next restart.!RESET!
+echo !GREEN!No 48-digit recovery key should be requested at boot.!RESET!
+del "%TEMP%\acnx777_bitlocker.txt" >nul 2>&1
+del "%TEMP%\acnx777_bitlocker2.txt" >nul 2>&1
+goto :BitLocker_End
+
+:BitLocker_Skip
+echo !GREEN!BitLocker is not active ^(status: !BLPROT!^). Nothing to suspend.!RESET!
+
+:BitLocker_End
+
+:: =====================================================================
 :: 02. VARIABILI UTILITY PER REGISTRO
 :: =====================================================================
 
@@ -848,7 +880,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\pci\Parameters" /v "PciBufferSiz
 :: =====================================================================
 
 :: Elenco servizi da disabilitare
-set "SC_DISABLED=DiagTrack dmwappushservice WerSvc DPS WdiServiceHost WdiSystemHost PcaSvc diagnosticshub.standardcollector.service diagsvc SysMain RemoteRegistry RemoteAccess WinRM iphlpsvc BDESVC EFS SCardSvr ScDeviceEnum Fax MapsBroker PhoneSvc TapiSrv AJRouter WpcMonSvc ALG EntAppSvc wisvc RetailDemo WMPNetworkSvc StiSvc SensorService SensrSvc SensorDataService XboxGipSvc XblAuthManager XboxNetApiSvc XblGameSave SEMgrSvc uhssvc upfc microsoftedgeupdater microsoftedgeupdatem EsifTelemetryService ipfsvc AeLookupSvc WSAIFabricSvc edgeupdate edgeupdatem DsSvc WarpSvc NvTelemetryContainer Wecsvc NetTcpPortSharing perceptionsimulation spectrum MixedRealityOpenXRSvc BcastDVRUserService icssvc DmEnrollmentSvc embeddedmode GraphicsPerfSvc HvHost IpxlatCfgSvc jhi_service KtmRm LxpSvc McpManagementService MicrosoftEdgeElevationService NetSetupSvc NcdAutoSetup p2pimsvc p2psvc PerfHost pla PolicyAgent PNRPAutoReg PNRPsvc QWAVE RasAuto RasMan RpcLocator shpamsvc smphost SmsRouter SNMPTRAP svsvc TroubleshootingSvc tzautoupdate WebClient WEPHOSTSVC wercplsupport WFDSConMgrSvc WiaRpc WManSvc wmiApSrv WPDBusEnum LicenseManager fhsvc defragsvc TieringEngineService UdkUserSvc Spooler SharedAccess WwanSvc"
+set "SC_DISABLED=DiagTrack dmwappushservice WerSvc DPS WdiServiceHost WdiSystemHost PcaSvc diagnosticshub.standardcollector.service diagsvc SysMain RemoteRegistry RemoteAccess WinRM iphlpsvc EFS SCardSvr ScDeviceEnum Fax MapsBroker PhoneSvc TapiSrv AJRouter WpcMonSvc ALG EntAppSvc wisvc RetailDemo WMPNetworkSvc StiSvc SensorService SensrSvc SensorDataService XboxGipSvc XblAuthManager XboxNetApiSvc XblGameSave SEMgrSvc uhssvc upfc microsoftedgeupdater microsoftedgeupdatem EsifTelemetryService ipfsvc AeLookupSvc WSAIFabricSvc edgeupdate edgeupdatem DsSvc WarpSvc NvTelemetryContainer Wecsvc NetTcpPortSharing perceptionsimulation spectrum MixedRealityOpenXRSvc BcastDVRUserService icssvc DmEnrollmentSvc embeddedmode GraphicsPerfSvc HvHost IpxlatCfgSvc jhi_service KtmRm LxpSvc McpManagementService MicrosoftEdgeElevationService NetSetupSvc NcdAutoSetup p2pimsvc p2psvc PerfHost pla PolicyAgent PNRPAutoReg PNRPsvc QWAVE RasAuto RasMan RpcLocator shpamsvc smphost SmsRouter SNMPTRAP svsvc TroubleshootingSvc tzautoupdate WebClient WEPHOSTSVC wercplsupport WFDSConMgrSvc WiaRpc WManSvc wmiApSrv WPDBusEnum LicenseManager fhsvc defragsvc TieringEngineService UdkUserSvc Spooler SharedAccess WwanSvc"
 
 for %%S in (%SC_DISABLED%) do (
     sc config %%S start= disabled >nul 2>&1
@@ -2840,4 +2872,19 @@ Reg.exe add "HKLM\System\CurrentControlSet\Services\AMD External Events Utility"
 Reg.exe add "HKLM\System\CurrentControlSet\Services\amdfendr" /v "Start" /t REG_DWORD /d "4" /f > nul 2>&1
 Reg.exe add "HKLM\System\CurrentControlSet\Services\amdfendrmgr" /v "Start" /t REG_DWORD /d "4" /f > nul 2>&1
 Reg.exe add "HKLM\System\CurrentControlSet\Services\amdlog" /v "Start" /t REG_DWORD /d "4" /f > nul 2>&1
+
+:: =====================================================================
+:: FINE - AVVISO RIAVVIO (obbligatorio: riattiva anche BitLocker)
+:: =====================================================================
+echo.
+echo !GREEN!=====================================================================!RESET!
+echo !GREEN!                          RESTART REQUIRED                          !RESET!
+echo !GREEN!=====================================================================!RESET!
+echo !WHITE!  - BitLocker protection re-activates AUTOMATICALLY at restart.!RESET!
+echo !WHITE!  - Most tweaks only apply after a reboot.!RESET!
+echo !WHITE!  - If BitLocker asks for a recovery key, read it at:!RESET!
+echo !WHITE!    https://aka.ms/myrecoverykey!RESET!
+echo !GREEN!=====================================================================!RESET!
+echo.
+timeout /t 20 /nobreak >nul
 exit /b 0
